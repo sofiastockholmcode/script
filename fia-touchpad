@@ -1,0 +1,1 @@
+xinput set-prop "DLL07BF:01 06CB:7A13 Touchpad" "Device Enabled" $1

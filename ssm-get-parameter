@@ -1,0 +1,21 @@
+#!/bin/bash
+
+if [ "$#" -lt 1 ]; then
+ echo "Usage: $0 /env/db"
+fi
+
+SSM_PARAMETER=$1
+
+# echo $SSM_PARAMETER
+
+if [ ${SSM_PARAMETER%/*} == "/prod" ]; then 
+	AWS_PROFILE=prod && SECRET=$(aws ssm get-parameter --with-decryption --name $1 | jq -r '.Parameter.Value')
+	echo $SECRET
+	echo $SECRET | xclip -selection c
+	exit
+fi
+
+AWS_PROFILE=test && SECRET=$(aws ssm get-parameter --with-decryption --name $1 | jq -r '.Parameter.Value')
+echo $SECRET
+echo $SECRET | xclip -selection c
+exit

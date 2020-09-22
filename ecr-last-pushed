@@ -1,0 +1,17 @@
+#!/bin/bash
+
+if [ "$#" -ne 1 ]; then
+    echo "$0 <repo-name>"
+    exit
+fi
+
+REPO=$1
+
+AWS_PROFILE=tools
+
+echo
+
+aws ecr describe-images --repository-name $REPO  \
+--query 'reverse(sort_by(imageDetails,& imagePushedAt)[*])' | jq -r '.[0] | (.lastPushed = (.imagePushedAt|gmtime|strftime("%Y-%m-%dT%H:%M:%S %Z"))) | {repositoryName: .repositoryName, tag: .imageTags[0], tag2: .imageTags[1], pushed: .lastPushed}'  
+
+echo

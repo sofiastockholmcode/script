@@ -1,0 +1,2 @@
+#!/bin/sh
+'feh' '--bg-fill' '/usr/share/backgrounds/windows_10_hero_4k-wallpaper-2880x1800.jpg' 

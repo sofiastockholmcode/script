@@ -1,0 +1,5 @@
+#!/bin/bash 
+
+CLUSTER=$(kubectl config current-context | sed -n -e 's/^.*\///p')
+echo "Log streams for cluster $(tput setaf 3)$CLUSTER $(tput sgr0) (latest first)"
+aws logs describe-log-streams --log-group-name /aws/eks/$CLUSTER/cluster | jq -r '.logStreams |= sort_by(.creationTime) | .logStreams | reverse[] | .logStreamName '

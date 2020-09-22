@@ -1,0 +1,15 @@
+#!/bin/bash
+
+if [ "$#" -eq 0 ];then 
+	echo "Usage: $0 log-stream-name";
+	echo "Run k-log-streams to get log-streams"
+	exit 1; 
+fi
+
+CLUSTER=$(kubectl config current-context | sed -n -e 's/^.*\///p')
+
+LOG_STREAM=$1
+
+echo $LOG_STREAM
+
+aws logs get-log-events --log-group-name /aws/eks/$CLUSTER/cluster --log-stream-name $LOG_STREAM | jq -r '.events[].message'

@@ -1,0 +1,3 @@
+#!/bin/sh
+
+echo "unxz file.tar.xz"
